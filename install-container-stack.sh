@@ -163,6 +163,8 @@ function update-stack {
    git pull origin master
    
    cp -rf ~/stack/container-stack/install-container-stack.sh ~/install-container-stack.sh
+   addreplacevalue "source ~/install-container-stack.sh" "source ~/install-container-stack.sh" ~/.bashrc
+   source ~/.bashrc
    echo "Stack utilities updated"
 }
 
