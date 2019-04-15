@@ -269,14 +269,20 @@ function stack-up {
            stackdomain=$domain_name
    else
        echo 
-       while true
-       do
-           read  -p "Enter DOMAIN: " stackdomain
-           echo
-           [ -z "$stackdomain" ] && echo "Please provide Enter DOMAIN" || break
-           echo
-       done
+       if [ ! -d ~/stack/container-stack  ]; then
 
+          while true
+          do
+              read  -p "Enter DOMAIN: " stackdomain
+              echo
+              [ -z "$stackdomain" ] && echo "Please provide Enter DOMAIN" || break
+              echo
+          done
+          echo "TRAEFIK_FRONTEND_RULE=Host:$stackdomain" > .env
+       fi
+
+       
+       
        while true
        do
            read -s -p "Enter a MySQL ROOT Password: " mysqlrootpassword
@@ -332,7 +338,7 @@ function stack-up {
 
    
    echo $SQLCODE | mysql -h $mysql_ip -P 3306 -u root -p$mysqlrootpassword
-      
+
    sudo MYSQL_PASSWORD=$dbuserpassword DATABASE_PASSWORD=$dbuserpassword TRAEFIK_FRONTEND_RULE=Host:$stackdomain docker-compose up -d
    
 }
