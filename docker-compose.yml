@@ -34,8 +34,8 @@ services:
       - 127.0.0.1:8080:8080 # The Web UI (enabled by --api)
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
-      - ./traefik/traefik.toml:/traefik.toml # Traefik configuration file
-      - ./volumes/traefik-acme:/acme # Tell Traefik to save SSL certs here
+      - ./stackdata/traefik/traefik.toml:/traefik.toml # Traefik configuration file
+      - ./stackdata/traefik-acme:/acme # Tell Traefik to save SSL certs here
 
 
   portainer:
@@ -50,7 +50,7 @@ services:
       - 127.0.0.1:9000:9000
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - portainer_data:/data
+      - ./stackdata/portainer:/data
     labels:
       - "traefik.enable=false"
 
@@ -69,7 +69,7 @@ services:
     links:
        - mysql
     volumes: 
-      - api_data:/usr/src/api/api-app
+      - ./stackdata/api:/usr/src/api/api-app
     environment:
       APP_NAME: api-app
       DATABASE_CLIENT: mysql
@@ -88,7 +88,7 @@ services:
   wordpress:
     image: wordpress:latest
     volumes:
-      - ./wp_data:/var/www/html
+      - ./stackdata/wordpress:/var/www/html
     ports:
       - 80
     labels:
@@ -114,7 +114,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD:
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./stackdata/mysql:/var/lib/mysql
     restart: always
     #network_mode: bridge
     networks:
@@ -128,11 +128,4 @@ services:
       - docker-hoster
     labels:
       - traefik.enable=false
-
-
-volumes:
-  portainer_data:
-  mysql_data:
-  api_data:
-  acme:
 
