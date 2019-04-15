@@ -95,6 +95,8 @@ services:
       - "traefik.frontend.rule=${TRAEFIK_FRONTEND_RULE}"
       - "traefik.port=80"
       - "traefik.docker.network=traefik-net"
+    links:
+       - mysql
     networks:
       - internal
       - traefik-net
