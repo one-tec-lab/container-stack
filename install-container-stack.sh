@@ -65,10 +65,13 @@ function install-server {
    
    if [ "$USER" == "root" ];then
       echo
-      sudo adduser stackuser
-      echo
-      sudo usermod -aG sudo stackuser 
-      echo "User 'stackuser' Created. Logout from root and run the install command again under user 'stackuser'"
+      echo "To properly use the stack, you need a non-root user with sudo priviledges"
+      #sudo adduser stackuser
+      echo ' Example: Create a new user called "stackuser" (suggested) and add it to the sudo users:'
+      echo " sudo adduser stackuser" 
+      ech9 " sudo usermod -aG sudo stackuser"
+      #sudo usermod -aG sudo stackuser 
+      echo "Logout from root and run this install-stack command again under the non-root user"
       echo
       exit
    fi
