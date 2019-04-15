@@ -276,18 +276,59 @@ function stack-up {
            stackdomain=$domain_name
    else
        echo 
-       if [ ! -d ~/stack/container-stack  ]; then
+       if [ ! -f ~/stack/container-stack/.env  ]; then
 
           while true
           do
               read  -p "Enter DOMAIN: " stackdomain
               echo
-              [ -z "$stackdomain" ] && echo "Please provide Enter DOMAIN" || break
+              [ -z "$stackdomain" ] && echo "Please provide a DOMAIN" || break
               echo
           done
           echo "TRAEFIK_FRONTEND_RULE=Host:$stackdomain" > .env
        fi
 
+       if [ ! -f ~/stack/container-stack/stackdata/traefik/traefik.toml ]; then
+
+          while true
+          do
+              read  -p "Enter E-MAIl for certificates nitifications: " certs_mail
+              echo
+              [ -z "$certs_mail" ] && echo "Please provide a valid mail for certs" || break
+              echo
+          done
+          
+          bash -c "cat > ~/stack/container-stack/stackdata/traefik/traefik.toml" <<-EOF
+debug = false
+
+logLevel = "ERROR"
+defaultEntryPoints = ["https","http"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+  [entryPoints.https]
+  address = ":443"
+  [entryPoints.https.tls]
+
+[retry]
+
+[docker]
+exposedByDefault = false
+
+[acme]
+email = "$certs_mail"
+storage = "acme/certs.json"
+entryPoint = "https"
+onHostRule = true
+[acme.httpChallenge]
+entryPoint = "http"
+EOF
+
+          echo "TRAEFIK_FRONTEND_RULE=Host:$stackdomain" > .env
+       fi
        
        
        while true
