@@ -67,7 +67,7 @@ services:
     links:
        - mysql
     volumes: 
-      - ./api-app:/usr/src/api/api-app
+      - api-app:/usr/src/api/api-app
     environment:
       APP_NAME: api-app
       DATABASE_CLIENT: mysql
@@ -111,3 +111,5 @@ services:
 volumes:
   portainer_data:
   mysql_data:
+  api_app:
+  acme:
