@@ -230,8 +230,16 @@ function setup-buffalo {
 }
 
 function configure-stack {
-   sudo addreplacevalue "127.0.0.1     dockerhost" "127.0.0.1     dockerhost" /etc/hosts
-   
+    searchString="127.0.0.1     dockerhost"
+    file="/etc/hosts"
+    if grep -Fxq "$searchString" $file
+       then
+               echo "String found in $fi  le"
+       else
+               echo "String not found in $file. Adding dockerhost"
+               sudo echo "127.0.0.1     dockerhost" | sudo tee -a  /etc/hosts
+    fi
+
    cat /etc/hosts
    # Get script arguments for non-interactive mode
    while [ "$1" != "" ]; do
