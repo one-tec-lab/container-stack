@@ -79,7 +79,7 @@ services:
     links:
        - mysql
     volumes: 
-      - ./strapi-app:/usr/src/api/strapi-app
+      - strapi-app:/usr/src/api/strapi-app
     environment:
       APP_NAME: strapi-app
       DATABASE_CLIENT: mysql
@@ -120,3 +120,4 @@ services:
 volumes:
   portainer_data:
   mysql_data:
+  strapi-app:
