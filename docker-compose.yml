@@ -3,7 +3,7 @@ version: '3'
 # docker-compose up -d
 
 networks:
-  web:
+  traefik-net:
     external: true
   internal:
     external: false
@@ -26,7 +26,7 @@ services:
     restart: always
     #network_mode: bridge
     networks:
-      - web
+      - traefik-net
       - internal
     ports:
       - 80:80     # The HTTP port
@@ -34,6 +34,8 @@ services:
       - 127.0.0.1:8080:8080 # The Web UI (enabled by --api)
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+      - ./traefik/traefik.toml:/traefik.toml # Traefik configuration file
+      - ./volumes/traefik-acme:/acme # Tell Traefik to save SSL certs here
 
 
   portainer:
@@ -43,7 +45,7 @@ services:
     restart: always
     #network_mode: bridge
     networks:
-      - web
+      - traefik-net
     ports:
       - 127.0.0.1:9000:9000
     volumes:
@@ -60,7 +62,7 @@ services:
       - mysql
     #network_mode: bridge
     networks:
-      - web
+      - traefik-net
       - internal
     ports:
       - 1337:1337
@@ -79,11 +81,29 @@ services:
     labels:
       ###- "traefik.enable=true"
       - "traefik.backend=api"
-      - "traefik.docker.network=web"
+      - "traefik.docker.network=traefik-net"
       - "traefik.frontend.rule=PathPrefixStrip:/api"
       - "traefik.port=1337"
     
-
+   wordpress:
+     image: wordpress:latest
+     volumes:
+       - wp:/var/www/html
+     ports:
+       - 80
+     deploy:
+       labels:
+         - "traefik.frontend.rule=${TRAEFIK_FRONTEND_RULE}"
+         - "traefik.port=80"
+         - "traefik.docker.network=traefik-net"
+     networks:
+      - internal
+      - traefik-net
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: stack_wp
+       WORDPRESS_DB_PASSWORD:
       
   # export MYSQL_ROOT_PASSWORD=secure_database_password  
   mysql:
@@ -113,3 +133,4 @@ volumes:
   mysql_data:
   api_app:
   acme:
+  wp:
