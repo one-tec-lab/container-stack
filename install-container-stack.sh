@@ -273,7 +273,7 @@ function stack-up {
        do
            read  -p "Enter DOMAIN: " stackdomain
            echo
-           [ -z "$use_gitname" ] && echo "Please provide Enter DOMAIN" || break
+           [ -z "$stackdomain" ] && echo "Please provide Enter DOMAIN" || break
            echo
        done
 
