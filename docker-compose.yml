@@ -66,7 +66,7 @@ services:
 
   
   strapi:
-    container_name: strapi
+    container_name: api
     image: strapi/strapi
     restart: always
     depends_on:
@@ -77,13 +77,13 @@ services:
       - internal
 
     ports:
-      - 127.0.0.1:1337:1337
+      - 1337:1337
     links:
        - mysql
     volumes: 
-      - strapi-app:/usr/src/api/strapi-app
+      - api-app:/usr/src/api/api-app
     environment:
-      APP_NAME: strapi-app
+      APP_NAME: api-app
       DATABASE_CLIENT: mysql
       DATABASE_HOST: mysql
       DATABASE_PORT: 3306
@@ -91,8 +91,11 @@ services:
       DATABASE_USERNAME: api_user
       DATABASE_PASSWORD:
     labels:
-      - "traefik.enable=true"
-
+      ###- "traefik.enable=true"
+      - "traefik.backend=api"
+      - "traefik.docker.network=web"
+      - "traefik.frontend.rule=Host:example.com;PathPrefixStrip:/api"
+      - "traefik.port=1337"
     
 
       
@@ -122,4 +125,4 @@ services:
 volumes:
   portainer_data:
   mysql_data:
-  strapi-app:
+  api-app:
