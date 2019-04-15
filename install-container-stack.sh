@@ -230,7 +230,7 @@ function setup-buffalo {
 }
 
 function configure-stack {
-   addreplacevalue "127.0.0.1     dockerhost" "127.0.0.1     dockerhost" /etc/hosts
+   sudo addreplacevalue "127.0.0.1     dockerhost" "127.0.0.1     dockerhost" /etc/hosts
    
    cat /etc/hosts
    # Get script arguments for non-interactive mode
