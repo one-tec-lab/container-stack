@@ -69,7 +69,7 @@ services:
     links:
        - mysql
     volumes: 
-      - api-app:/usr/src/api/api-app
+      - api_data:/usr/src/api/api-app
     environment:
       APP_NAME: api-app
       DATABASE_CLIENT: mysql
@@ -88,7 +88,7 @@ services:
   wordpress:
     image: wordpress:latest
     volumes:
-      - wp:/var/www/html
+      - wp_data:/var/www/html
     ports:
       - 80
     labels:
@@ -131,6 +131,6 @@ services:
 volumes:
   portainer_data:
   mysql_data:
-  api_app:
+  api_data:
   acme:
-  wp:
+  wp_data:
