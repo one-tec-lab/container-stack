@@ -339,7 +339,11 @@ function stack-up {
    
    echo $SQLCODE | mysql -h $mysql_ip -P 3306 -u root -p$mysqlrootpassword
 
-   sudo MYSQL_PASSWORD=$dbuserpassword DATABASE_PASSWORD=$dbuserpassword WORDPRESS_DB_PASSWORD=$dbuserpassword docker-compose up -d
+   sudo MYSQL_PASSWORD=$dbuserpassword \
+   DATABASE_PASSWORD=$dbuserpassword \
+   WORDPRESS_DB_PASSWORD=$dbuserpassword \
+   CURRENT_UID=$(id -u):$(id -g) \
+   docker-compose up -d
    
 }
 
