@@ -230,7 +230,14 @@ function setup-buffalo {
 }
 
 function stack-up {
-    sudo apt-get install -y mysql-client
+    cd ~/stack/container-stack
+    mkdir -p ~/stack/container-stack/stackdata/traefik/acme
+    mkdir -p ~/stack/container-stack/stackdata/portainer
+    mkdir -p ~/stack/container-stack/stackdata/wordpress
+    mkdir -p ~/stack/container-stack/stackdata/mysql
+    mkdir -p ~/stack/container-stack/stackdata/api
+   sudo apt-get install -y mysql-client
+      
     searchString="127.0.0.1     dockerhost"
     file="/etc/hosts"
     if grep -Fxq "$searchString" $file
@@ -313,7 +320,7 @@ function stack-up {
 
     
     
-    cd ~/stack/container-stack
+
     sudo docker network create traefik-net
     sudo MYSQL_ROOT_PASSWORD=$mysqlrootpassword docker-compose up -d mysql
 
