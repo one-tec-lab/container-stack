@@ -269,7 +269,14 @@ function stack-up {
            stackdomain=$domain_name
    else
        echo 
-       read -s -p "Enter DOMAIN: " stackdomain
+       while true
+       do
+           read  -p "Enter DOMAIN: " stackdomain
+           echo
+           [ -z "$use_gitname" ] && echo "Please provide Enter DOMAIN" || break
+           echo
+       done
+
        while true
        do
            read -s -p "Enter a MySQL ROOT Password: " mysqlrootpassword
