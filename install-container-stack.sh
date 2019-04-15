@@ -229,7 +229,7 @@ function setup-buffalo {
    
 }
 
-function configure-stack {
+function stack-up {
     sudo apt-get install -y mysql-client
     searchString="127.0.0.1     dockerhost"
     file="/etc/hosts"
@@ -294,7 +294,7 @@ function configure-stack {
     
     
     cd ~/stack/container-stack
-    sudo docker network create web
+    sudo docker network create traefik-net
     sudo MYSQL_ROOT_PASSWORD=$mysqlrootpassword docker-compose up -d mysql
 
    # Sleep to let MySQL load (there's probably a better way to do this)
@@ -307,6 +307,9 @@ function configure-stack {
    create database api_db CHARACTER SET utf8 COLLATE utf8_general_ci; 
    create user 'api_user'@'%' identified by '$dbuserpassword'; 
    GRANT ALL PRIVILEGES ON api_db.* TO 'api_user'@'%'; 
+   create database wp_db CHARACTER SET utf8 COLLATE utf8_general_ci; 
+   create user 'wp_user'@'%' identified by '$dbuserpassword'; 
+   GRANT ALL PRIVILEGES ON wp_db.* TO 'wp_user'@'%'; 
    flush privileges;"
 
    # Execute SQL Code
