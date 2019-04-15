@@ -315,7 +315,7 @@ function configure-stack {
    
    echo $SQLCODE | mysql -h $mysql_ip -P 3306 -u root -p$mysqlrootpassword
       
-   MYSQL_PASSWORD=$dbuserpassword DATABASE_PASSWORD=$dbuserpassword docker-compose up -d
+   MYSQL_PASSWORD=$dbuserpassword DATABASE_PASSWORD=$dbuserpassword sudo docker-compose up -d
    
 }
 
