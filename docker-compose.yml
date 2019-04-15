@@ -30,6 +30,7 @@ services:
       - internal
     ports:
       - 80:80     # The HTTP port
+      - 443:443
       - 127.0.0.1:8080:8080 # The Web UI (enabled by --api)
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
@@ -66,7 +67,7 @@ services:
     links:
        - mysql
     volumes: 
-      - api-app:/usr/src/api/api-app
+      - ./api-app:/usr/src/api/api-app
     environment:
       APP_NAME: api-app
       DATABASE_CLIENT: mysql
@@ -110,4 +111,3 @@ services:
 volumes:
   portainer_data:
   mysql_data:
-  api-app:
