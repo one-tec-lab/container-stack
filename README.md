@@ -2,12 +2,15 @@
 
 The Container Stack installs the following components:
 
-**Server components**: verifies Docker, Go language, NodeJS 10, npm and yarn
+**Server components**: 
+verifies Docker
+
+Optionally, provides commands for installing Go language, NodeJS 10, npm and yarn (check install-container-stack.sh for available commands)
 
 
 ### Requirements ##
 * UBUNTU 18.04 LTS
-* docker and docker-compose (if not installed)
+* docker and docker-compose (if not installed can be installed with command install-docker)
 * Access to a console with sudo permissions (SSH will do)
 
 ## Install
