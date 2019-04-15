@@ -69,7 +69,7 @@ function install-server {
       #sudo adduser stackuser
       echo ' Example: Create a new user called "stackuser" (suggested) and add it to the sudo users:'
       echo " sudo adduser stackuser" 
-      ech9 " sudo usermod -aG sudo stackuser"
+      echo " sudo usermod -aG sudo stackuser"
       #sudo usermod -aG sudo stackuser 
       echo "Logout from root and run this install-stack command again under the non-root user"
       echo
