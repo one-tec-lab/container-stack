@@ -62,42 +62,17 @@ function install-server {
    version=$(lsb_release -d | awk -F":" '/Description/ {print $2}')
    echo $version   
    sudo echo
-
-   if [ -f /root/.cloud-locale-test.skip ];then
-      echo "Running in Digital-Ocean. Using original repositories"
-      if [ "$USER" == "root" ];then
-         echo
-         sudo adduser stackuser
-         echo
-         sudo usermod -aG sudo stackuser 
-         echo "User 'stackuser' Created. Logout from root and run the install command again under user 'stackuser'"
-         echo
-         exit
-      fi
-   else
-      echo "Running in standard server. Changing original repositories"
-      cd $HOME/
-      if grep -q 'APT::Periodic::Update-Package-Lists "1";' /etc/apt/apt.conf.d/20auto-upgrades; then
-        echo "Auto updates are enabled"
-        #echo "Auto-updates required to be disabled (not done). "
-        #sudo cp /etc/apt/apt.conf.d/20auto-upgrades /etc/backup_apt_apt.conf.d_20auto-upgrades
-        #sudo echo 'APT::Periodic::Update-Package-Lists "0";' | sudo tee /etc/apt/apt.conf.d/20auto-upgrades
-        #sudo echo 'APT::Periodic::Unattended-Upgrade "1";' | sudo tee -a /etc/apt/apt.conf.d/20auto-upgrades
-        #echo "A backup of /etc/apt/apt.conf.d/20auto-upgrades was created at /etc/backup_20auto-upgrades"
-        #echo "Restart the system and run the installation command again "
-        ####sudo addreplacevalue 'APT::Periodic::Update-Package-Lists "1";' 'APT::Periodic::Update-Package-Lists "0";' /etc/apt/apt.conf.d/20auto-upgrades
-        #exit
-      fi
-      echo "Replacing sources.list"
-      sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup 
-
-      sudo echo "deb http://archive.ubuntu.com/ubuntu bionic main universe" | sudo tee /etc/apt/sources.list
-      sudo echo "deb-src http://archive.ubuntu.com/ubuntu bionic main universe #Added by software-properties" | sudo tee -a /etc/apt/sources.list
-      sudo echo "deb http://archive.ubuntu.com/ubuntu bionic-security main universe" | sudo tee -a /etc/apt/sources.list
-      sudo echo "deb-src http://archive.ubuntu.com/ubuntu bionic-security main universe #Added by software-properties" | sudo tee -a /etc/apt/sources.list
-      sudo echo "deb http://archive.ubuntu.com/ubuntu bionic-updates main universe" | sudo tee -a /etc/apt/sources.list
-      sudo echo "deb-src http://archive.ubuntu.com/ubuntu bionic-updates main universe #Added by software-properties" | sudo tee -a /etc/apt/sources.list
+   
+   if [ "$USER" == "root" ];then
+      echo
+      sudo adduser stackuser
+      echo
+      sudo usermod -aG sudo stackuser 
+      echo "User 'stackuser' Created. Logout from root and run the install command again under user 'stackuser'"
+      echo
+      exit
    fi
+
    ########### git
    #sudo add-apt-repository ppa:git-core/ppa -y
 
@@ -116,6 +91,7 @@ function install-server {
    /bin/echo -e "\e[1;36m#-----------------------------------------------------------------------#\e[0m"
    echo
 }
+
 function install-docker {
    ######## docker
    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
@@ -145,6 +121,7 @@ function install-go {
    curl -sL https://dl.google.com/go/go1.12.3.linux-amd64.tar.gz -o $HOME/go.tar.gz
    sudo tar -C /usr/local -xzf go.tar.gz
    mkdir -p $HOME/go/bin
+   rm ~/go.tar.gz
 }
 
 function install-node {
@@ -159,14 +136,15 @@ function install-node {
    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
    sudo apt-get update && 
    sudo apt-get install yarn -y
+   rm ~/nodesource_setup.sh
    echo
 }
 
 
 function clean-stack {
-   rm ~/nodesource_setup.sh
-   rm ~/google-chrome-stable_current_amd64.deb 
-   rm ~/go.tar.gz
+
+
+echo "Stack cleaned"
 }
 
 function update-stack {
@@ -191,7 +169,6 @@ function update-stack {
 
 function install-stack {
  install-server
- install-desktop
  update-stack
  clean-stack
 }
