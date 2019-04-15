@@ -231,7 +231,8 @@ function setup-buffalo {
 
 function configure-stack {
    
-
+   sudo echo "127.0.0.1     dockerhost" | sudo tee -a  /etc/hosts
+   cat /etc/hosts
    # Get script arguments for non-interactive mode
    while [ "$1" != "" ]; do
        case $1 in
@@ -313,9 +314,7 @@ function configure-stack {
 function clean-docker {
    cd ~/stack/container-stack
    sudo docker-compose down
-   #docker stop guacd
-   #docker rm guacd
-   sudo docker system prune -a
+echo $DOCKER_HOST   sudo docker system prune -a
    sudo docker volume prune
  
 }
