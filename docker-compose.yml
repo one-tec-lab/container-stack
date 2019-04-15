@@ -102,7 +102,7 @@ services:
       - traefik-net
     restart: always
     environment:
-      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_HOST: mysql:3306
       WORDPRESS_DB_USER: wp_user
       WORDPRESS_DB_NAME: wp_db
       WORDPRESS_DB_PASSWORD:
