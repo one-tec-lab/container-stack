@@ -91,7 +91,7 @@ services:
       DATABASE_USERNAME: api_user
       DATABASE_PASSWORD:
     labels:
-      - "traefik.enable=false"
+      - "traefik.enable=true"
 
     
 
