@@ -230,6 +230,7 @@ function setup-buffalo {
 }
 
 function configure-stack {
+    sudo apt-get install -y mysql-client
     searchString="127.0.0.1     dockerhost"
     file="/etc/hosts"
     if grep -Fxq "$searchString" $file
