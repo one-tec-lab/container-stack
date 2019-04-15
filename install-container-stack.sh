@@ -14,7 +14,7 @@
 # 0.1 - Initial Script
 # Disclaimer : Script provided AS IS. Use it at your own risk....
 ##################################################################
-
+export CONTAINER_STACK_VER="3.0"
 function addreplacevalue {
 
    usesudo="$4"
@@ -165,7 +165,7 @@ function update-stack {
    cp -rf ~/stack/container-stack/install-container-stack.sh ~/install-container-stack.sh
    addreplacevalue "source ~/install-container-stack.sh" "source ~/install-container-stack.sh" ~/.bashrc
    source ~/.bashrc
-   echo "Stack utilities updated"
+   echo "Stack utilities updated to $CONTAINER_STACK_VER"
 }
 
 function install-stack {
