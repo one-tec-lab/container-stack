@@ -94,7 +94,7 @@ services:
       ###- "traefik.enable=true"
       - "traefik.backend=api"
       - "traefik.docker.network=web"
-      - "traefik.frontend.rule=Host:example.com;PathPrefixStrip:/api"
+      - "traefik.frontend.rule=PathPrefixStrip:/api"
       - "traefik.port=1337"
     
 
