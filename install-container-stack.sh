@@ -314,7 +314,7 @@ function configure-stack {
 function clean-docker {
    cd ~/stack/container-stack
    sudo docker-compose down
-echo $DOCKER_HOST   sudo docker system prune -a
+   sudo docker system prune -a
    sudo docker volume prune
  
 }
