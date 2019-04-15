@@ -55,7 +55,7 @@ function addreplacevalue {
 function install-server {
 
    /bin/echo -e "\e[1;36m#-------------------------------------------------------------#\e[0m"
-   /bin/echo -e "\e[1;36m# Standard stack SERVER Installation Script - Ver 0.3 #\e[0m"
+   /bin/echo -e "\e[1;36m# Standard stack SERVER Installation Script #\e[0m"
    /bin/echo -e "\e[1;36m# Written by Tadeo - Nov 2018-  #\e[0m"
    /bin/echo -e "\e[1;36m#-------------------------------------------------------------#\e[0m"
    echo
@@ -90,7 +90,7 @@ function install-server {
    /bin/echo -e "\e[1;36m#-----------------------------------------------------------------------#\e[0m"
    /bin/echo -e "\e[1;36m# Installation Completed\e[0m"
    /bin/echo -e "\e[1;36m# Please test your Server configuration....\e[0m"
-   /bin/echo -e "\e[1;36m# Written by Tadeo - Ver 0.3 - install-container-stack.sh\e[0m"
+   /bin/echo -e "\e[1;36m# Written by Tadeo - install-container-stack.sh\e[0m"
    /bin/echo -e "\e[1;36m#-----------------------------------------------------------------------#\e[0m"
    echo
 }
