@@ -249,20 +249,27 @@ function stack-up {
                shift
                mysqlrootpwd="$1"
                ;;
-           -g | --apidbpwd )
+           -a | --apidbpwd )
                shift
                apidbpwd="$1"
                ;;
+           -d | --domain )
+               shift
+               $domain_name="$1"
+               ;;
+               
        esac
        shift
    done
 
    # Get MySQL root password and Guacamole User password
-   if [ -n "$mysqlrootpwd" ] && [ -n "$apidbpwd" ]; then
+   if [ -n "$mysqlrootpwd" ] && [ -n "$apidbpwd" ] && [ -n "$domain_name" ]; then
            mysqlrootpassword=$mysqlrootpwd
            dbuserpassword=$apidbpwd
+           stackdomain=$domain_name
    else
        echo 
+       read -s -p "Enter DOMAIN: " stackdomain
        while true
        do
            read -s -p "Enter a MySQL ROOT Password: " mysqlrootpassword
@@ -319,7 +326,7 @@ function stack-up {
    
    echo $SQLCODE | mysql -h $mysql_ip -P 3306 -u root -p$mysqlrootpassword
       
-   sudo MYSQL_PASSWORD=$dbuserpassword DATABASE_PASSWORD=$dbuserpassword docker-compose up -d
+   sudo MYSQL_PASSWORD=$dbuserpassword DATABASE_PASSWORD=$dbuserpassword TRAEFIK_FRONTEND_RULE=Host:$stackdomain docker-compose up -d
    
 }
 
