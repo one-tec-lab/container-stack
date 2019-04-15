@@ -316,13 +316,17 @@ function configure-stack {
    
    echo $SQLCODE | mysql -h $mysql_ip -P 3306 -u root -p$mysqlrootpassword
       
-   MYSQL_PASSWORD=$dbuserpassword DATABASE_PASSWORD=$dbuserpassword sudo docker-compose up -d
+   sudo MYSQL_PASSWORD=$dbuserpassword DATABASE_PASSWORD=$dbuserpassword docker-compose up -d
    
 }
 
-function clean-docker {
+
+function stack-down {
    cd ~/stack/container-stack
    sudo docker-compose down
+}
+function clean-docker {
+   stack-down
    sudo docker system prune -a
    sudo docker volume prune
  
