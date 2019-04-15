@@ -105,8 +105,8 @@ function install-docker {
    sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
    sudo chmod +x /usr/local/bin/docker-compose
 
-   sudo groupadd docker
-   sudo usermod -aG docker stackuser
+   #sudo groupadd docker
+   #sudo usermod -aG docker stackuser
    sudo echo "127.0.0.1     dockerhost" | sudo tee -a  /etc/hosts
 
 }
@@ -160,11 +160,7 @@ function update-stack {
    git pull origin master
    
    cp -rf ~/stack/container-stack/install-container-stack.sh ~/install-container-stack.sh
-   cp ~/stack/container-stack/img/* ~/Pictures
-   if [ ! -f ~/.config/Code/User/settings.json  ]; then
-      mkdir -p ~/.config/Code/User/
-      cp ~/stack/container-stack/code/settings.json ~/.config/Code/User/settings.json
-   fi
+   echo "Stack utilities updated"
 }
 
 function install-stack {
@@ -234,22 +230,22 @@ function configure-stack {
    # Get script arguments for non-interactive mode
    while [ "$1" != "" ]; do
        case $1 in
-           -m | --mysqlpwd )
+           -m | --mysqlrootpwd )
                shift
-               mysqlpwd="$1"
+               mysqlrootpwd="$1"
                ;;
-           -g | --guacpwd )
+           -g | --apidbpwd )
                shift
-               guacpwd="$1"
+               apidbpwd="$1"
                ;;
        esac
        shift
    done
 
    # Get MySQL root password and Guacamole User password
-   if [ -n "$mysqlpwd" ] && [ -n "$guacpwd" ]; then
-           mysqlrootpassword=$mysqlpwd
-           dbuserpassword=$guacpwd
+   if [ -n "$mysqlrootpwd" ] && [ -n "$apidbpwd" ]; then
+           mysqlrootpassword=$mysqlrootpwd
+           dbuserpassword=$apidbpwd
    else
        echo 
        while true
@@ -283,8 +279,8 @@ function configure-stack {
     
     
     cd ~/stack/container-stack
-    docker network create web
-    MYSQL_ROOT_PASSWORD=$mysqlrootpassword docker-compose up -d mysql
+    sudo docker network create web
+    sudo MYSQL_ROOT_PASSWORD=$mysqlrootpassword docker-compose up -d mysql
 
    # Sleep to let MySQL load (there's probably a better way to do this)
    echo "Waiting 20 seconds for MySQL to load"
@@ -300,7 +296,7 @@ function configure-stack {
 
    # Execute SQL Code
    
-   mysql_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql )
+   mysql_ip=$(sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql )
 
    
    echo $SQLCODE | mysql -h $mysql_ip -P 3306 -u root -p$mysqlrootpassword
@@ -311,11 +307,11 @@ function configure-stack {
 
 function clean-docker {
    cd ~/stack/container-stack
-   docker-compose down
+   sudo docker-compose down
    #docker stop guacd
    #docker rm guacd
-   docker system prune -a
-   docker volume prune
+   sudo docker system prune -a
+   sudo docker volume prune
  
 }
 
