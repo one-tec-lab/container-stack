@@ -79,10 +79,10 @@ services:
       DATABASE_USERNAME: api_user
       DATABASE_PASSWORD:
     labels:
-      ###- "traefik.enable=true"
+      - "traefik.enable=true"
       - "traefik.backend=api"
       - "traefik.docker.network=traefik-net"
-      - "traefik.frontend.rule=PathPrefixStrip:/api"
+      - "traefik.frontend.rule=api.${TRAEFIK_FRONTEND_RULE}"
       - "traefik.port=1337"
     
   wordpress:
