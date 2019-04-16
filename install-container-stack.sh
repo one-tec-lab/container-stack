@@ -236,6 +236,7 @@ function clean-traefik {
 function stack-up {
    comment_acme_staging=" "
    comment_redirect="#"
+   comment_acme="#"
    cd ~/stack/container-stack
    mkdir -p ~/stack/container-stack/stackdata/traefik/acme
    mkdir -p ~/stack/container-stack/stackdata/portainer
@@ -325,14 +326,14 @@ domain = "$stackdomain"
 watch = true
 exposedByDefault = false
 
-[acme]
-   $comment_acme_staging caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-   email = "$certs_mail"
-   storage = "acme/certs.json"
-   entryPoint = "https"
-   onHostRule = true
-   [acme.httpChallenge]
-      entryPoint = "http"
+$comment_acme [acme]
+$comment_acme  $comment_acme_staging caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+$comment_acme   email = "$certs_mail"
+$comment_acme   storage = "acme/certs.json"
+$comment_acme   entryPoint = "https"
+$comment_acme   onHostRule = true
+$comment_acme   [acme.httpChallenge]
+$comment_acme      entryPoint = "http"
 EOF
        fi
               
