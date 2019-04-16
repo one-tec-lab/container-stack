@@ -322,12 +322,13 @@ watch = true
 exposedByDefault = false
 
 [acme]
+caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
 email = "$certs_mail"
 storage = "acme/certs.json"
 entryPoint = "https"
 onHostRule = true
-[acme.httpChallenge]
-entryPoint = "http"
+   [acme.httpChallenge]
+   entryPoint = "http"
 EOF
 
           echo "TRAEFIK_FRONTEND_RULE=Host:$stackdomain" > .env
