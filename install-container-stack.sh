@@ -234,12 +234,14 @@ function clean-traefik {
 }
 
 function stack-up {
-    cd ~/stack/container-stack
-    mkdir -p ~/stack/container-stack/stackdata/traefik/acme
-    mkdir -p ~/stack/container-stack/stackdata/portainer
-    mkdir -p ~/stack/container-stack/stackdata/wordpress
-    mkdir -p ~/stack/container-stack/stackdata/mysql
-    mkdir -p ~/stack/container-stack/stackdata/api
+   comment_acme_staging=" "
+   comment_redirect="#"
+   cd ~/stack/container-stack
+   mkdir -p ~/stack/container-stack/stackdata/traefik/acme
+   mkdir -p ~/stack/container-stack/stackdata/portainer
+   mkdir -p ~/stack/container-stack/stackdata/wordpress
+   mkdir -p ~/stack/container-stack/stackdata/mysql
+   mkdir -p ~/stack/container-stack/stackdata/api
    sudo apt-get install -y mysql-client
       
     searchString="127.0.0.1     dockerhost"
@@ -308,12 +310,12 @@ defaultEntryPoints = ["https","http"]
 
 [entryPoints]
   [entryPoints.http]
-  address = ":80"
-    [entryPoints.http.redirect]
-    entryPoint = "https"
+      address = ":80"
+      $comment_redirect [entryPoints.http.redirect]
+      $comment_redirect   entryPoint = "https"
   [entryPoints.https]
-  address = ":443"
-  [entryPoints.https.tls]
+      address = ":443"
+      [entryPoints.https.tls]
 
 [retry]
 
@@ -324,13 +326,13 @@ watch = true
 exposedByDefault = false
 
 [acme]
-caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
-email = "$certs_mail"
-storage = "acme/certs.json"
-entryPoint = "https"
-onHostRule = true
+   $comment_acme_staging caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+   email = "$certs_mail"
+   storage = "acme/certs.json"
+   entryPoint = "https"
+   onHostRule = true
    [acme.httpChallenge]
-   entryPoint = "http"
+      entryPoint = "http"
 EOF
 
 
