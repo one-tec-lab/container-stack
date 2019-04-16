@@ -82,10 +82,11 @@ services:
       - "traefik.enable=true"
       - "traefik.backend=api"
       - "traefik.docker.network=traefik-net"
-      - "traefik.frontend.rule=Host:api.${STACK_MAIN_DOMAIN}"
+      - "traefik.frontend.rule=Host:${STACK_MAIN_DOMAIN};PathPrefixStrip:/api"
       - "traefik.port=1337"
     
   wordpress:
+    container_name: wordpress
     image: wordpress:latest
     volumes:
       - ./stackdata/wordpress:/var/www/html
