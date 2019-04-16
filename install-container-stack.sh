@@ -229,8 +229,8 @@ function setup-buffalo {
    
 }
 function clean-traefik {
-    sudo rm ~/stack/container-stack/stackdata/traefik/traefik.toml
-    rm ~/stack/container-stack/.env
+    sudo rm -rf ~/stack/container-stack/stackdata/traefik/traefik.toml
+    rm -rf ~/stack/container-stack/.env
 }
 
 function stack-up {
