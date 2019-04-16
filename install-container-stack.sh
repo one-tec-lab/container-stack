@@ -278,17 +278,15 @@ function stack-up {
        echo 
 
        if [ ! -f ~/stack/container-stack/stackdata/traefik/traefik.toml ]; then
-          if [ ! -f ~/stack/container-stack/.env  ]; then
+          while true
+          do
+              read  -p "Enter DOMAIN: " stackdomain
+              echo
+              [ -z "$stackdomain" ] && echo "Please provide a DOMAIN" || break
+              echo
+          done
 
-             while true
-             do
-                 read  -p "Enter DOMAIN: " stackdomain
-                 echo
-                 [ -z "$stackdomain" ] && echo "Please provide a DOMAIN" || break
-                 echo
-             done
-             echo "TRAEFIK_FRONTEND_RULE=Host:$stackdomain" > .env
-          fi
+          echo "TRAEFIK_FRONTEND_RULE=Host:$stackdomain" > .env
 
           while true
           do
