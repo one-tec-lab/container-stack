@@ -292,7 +292,7 @@ function stack-up {
 
           while true
           do
-              read  -p "Enter E-MAIl for certificates nitifications: " certs_mail
+              read  -p "Enter E-MAIl for certificates notifications: " certs_mail
               echo
               [ -z "$certs_mail" ] && echo "Please provide a valid mail for certs" || break
               echo
