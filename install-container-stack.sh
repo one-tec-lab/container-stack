@@ -244,15 +244,15 @@ function stack-up {
    mkdir -p ~/stack/container-stack/stackdata/api
    sudo apt-get install -y mysql-client
       
-    searchString="127.0.0.1     dockerhost"
-    file="/etc/hosts"
-    if grep -Fxq "$searchString" $file
-       then
-               echo "String found in $fi  le"
-       else
-               echo "String not found in $file. Adding dockerhost"
-               sudo echo "127.0.0.1     dockerhost" | sudo tee -a  /etc/hosts
-    fi
+   searchString="127.0.0.1     dockerhost"
+   file="/etc/hosts"
+   if grep -Fxq "$searchString" $file
+   then
+         echo "String found in $fi  le"
+   else
+         echo "String not found in $file. Adding dockerhost"
+         sudo echo "127.0.0.1     dockerhost" | sudo tee -a  /etc/hosts
+   fi
 
    cat /etc/hosts
    # Get script arguments for non-interactive mode
@@ -334,11 +334,8 @@ exposedByDefault = false
    [acme.httpChallenge]
       entryPoint = "http"
 EOF
-
-
        fi
-       
-       
+              
        while true
        do
            read -s -p "Enter a MySQL ROOT Password: " mysqlrootpassword
@@ -363,15 +360,8 @@ EOF
        echo
    fi
 
-   #Install Stuff
-   #sudo apt-get update
-   #sudo apt-get -y install mysql-client wget
-
-    
-    
-
-    sudo docker network create traefik-net
-    sudo MYSQL_ROOT_PASSWORD=$mysqlrootpassword docker-compose up -d mysql
+   sudo docker network create traefik-net
+   sudo MYSQL_ROOT_PASSWORD=$mysqlrootpassword docker-compose up -d mysql
 
    # Sleep to let MySQL load (there's probably a better way to do this)
    echo "Waiting 20 seconds for MySQL to load"
@@ -391,8 +381,7 @@ EOF
    # Execute SQL Code
    
    mysql_ip=$(sudo docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysql )
-
-   
+ 
    echo $SQLCODE | mysql -h $mysql_ip -P 3306 -u root -p$mysqlrootpassword
 
    sudo MYSQL_PASSWORD=$dbuserpassword \
