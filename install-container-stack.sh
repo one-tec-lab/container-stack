@@ -290,7 +290,7 @@ function stack-up {
               echo
           done
 
-          echo "MAIN_DOMAIN=$stackdomain" > ~/stack/container-stack/.env
+          echo "STACK_MAIN_DOMAIN=$stackdomain" > ~/stack/container-stack/.env
 
           while true
           do
