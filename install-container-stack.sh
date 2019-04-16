@@ -333,7 +333,7 @@ onHostRule = true
    entryPoint = "http"
 EOF
 
-          echo "TRAEFIK_FRONTEND_RULE=Host:$stackdomain" > .env
+
        fi
        
        
