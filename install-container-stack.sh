@@ -228,6 +228,10 @@ function setup-buffalo {
    addreplacevalue "source ~/stack/buffalo_completion.sh" "source ~/stack/buffalo_completion.sh" ~/.bashrc
    
 }
+function clean-traefik {
+    sudo rm ~/stack/container-stack/stackdata/traefik/traefik.toml
+    rm ~/stack/container-stack/.env
+}
 
 function stack-up {
     cd ~/stack/container-stack
@@ -286,7 +290,7 @@ function stack-up {
               echo
           done
 
-          echo "TRAEFIK_FRONTEND_RULE=Host:$stackdomain" > .env
+          echo "MAIN_DOMAIN=$stackdomain" > ~/stack/container-stack/.env
 
           while true
           do
