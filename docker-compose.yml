@@ -82,7 +82,7 @@ services:
       - "traefik.enable=true"
       - "traefik.backend=api"
       - "traefik.docker.network=traefik-net"
-      - "traefik.frontend.rule=api.${TRAEFIK_FRONTEND_RULE}"
+      - "traefik.frontend.rule=${TRAEFIK_FRONTEND_RULE}"
       - "traefik.port=1337"
     
   wordpress:
@@ -92,7 +92,7 @@ services:
     ports:
       - 80
     labels:
-      - "traefik.frontend.rule=${TRAEFIK_FRONTEND_RULE}"
+      - "traefik.frontend.rule=Host:${STACK_MAIN_DOMAIN}"
       - "traefik.port=80"
       - "traefik.docker.network=traefik-net"
     links:
