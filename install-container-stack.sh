@@ -276,23 +276,23 @@ function stack-up {
            stackdomain=$domain_name
    else
        echo 
-       if [ ! -f ~/stack/container-stack/.env  ]; then
-
-          while true
-          do
-              read  -p "Enter DOMAIN: " stackdomain
-              echo
-              [ -z "$stackdomain" ] && echo "Please provide a DOMAIN" || break
-              echo
-          done
-          echo "TRAEFIK_FRONTEND_RULE=Host:$stackdomain" > .env
-       fi
 
        if [ ! -f ~/stack/container-stack/stackdata/traefik/traefik.toml ]; then
+          if [ ! -f ~/stack/container-stack/.env  ]; then
+
+             while true
+             do
+                 read  -p "Enter DOMAIN: " stackdomain
+                 echo
+                 [ -z "$stackdomain" ] && echo "Please provide a DOMAIN" || break
+                 echo
+             done
+             echo "TRAEFIK_FRONTEND_RULE=Host:$stackdomain" > .env
+          fi
 
           while true
           do
-              read  -p "Enter E-MAIl for certificates notifications: " certs_mail
+              read  -p "Enter E-MAIL for certificates notifications: " certs_mail
               echo
               [ -z "$certs_mail" ] && echo "Please provide a valid mail for certs" || break
               echo
@@ -316,6 +316,9 @@ defaultEntryPoints = ["https","http"]
 [retry]
 
 [docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "$stackdomain"
+watch = true
 exposedByDefault = false
 
 [acme]
