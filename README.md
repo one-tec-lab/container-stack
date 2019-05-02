@@ -9,8 +9,11 @@ Optionally, provides commands for installing Go language, NodeJS 10, npm and yar
 
 
 ### Requirements ##
-* UBUNTU 18.04 LTS
-* docker and docker-compose (if not installed can be installed with command install-docker)
+a) Install Docker
+
+-[Install Docker CE](https://docs.docker.com/install/)  
+Follow instructions for your OS. Runs on Linux, Mac and windows. The new version of docker (Native windows virtualization for Hyper-V) works on windows 10 Professional. 
+* docker and docker-compose 
 * Access to a console with sudo permissions (SSH will do)
 
 ## Install
